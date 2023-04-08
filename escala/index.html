@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Escala</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+        th {
+            background-color: #ddd;
+        }
+        /* Color coding for workers */
+        .mateus {
+            background-color: #ff8080;
+        }
+        .felipe {
+            background-color: #80b3ff;
+        }
+        .marcelo {
+            background-color: #b3ffb3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="tittle">Escala</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Operador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Here we insert the data using JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const schedule = {
+            "4/2/2023": {"manha": "Felipe", "noite": "Mateus"},
+            "4/5/2023": {"noite": "Marcelo"},
+            "4/9/2023": {"manha": "Mateus", "noite": "Felipe"},
+            "4/12/2023": {"noite": "Marcelo"},
+            "4/16/2023": {"manha": "Felipe", "noite": "Mateus"},
+            "4/19/2023": {"noite": "Marcelo"},
+            "4/23/2023": {"manha": "Mateus", "noite": "Felipe"},
+            "4/26/2023": {"noite": "Marcelo"},
+            "4/30/2023": {"manha": "Felipe", "noite": "Mateus"}
+        };
+        const monthstr = Object.keys(schedule);
+        const index = monthstr[0].indexOf("/");
+        const month = monthstr[0].substring(0, index);
+
+        const month_dict = {1: 'Janeiro',
+              2: 'Fevereiro',
+              3: 'Março',
+              4: 'Abril',
+              5: 'Maio',
+              6: 'Junho',
+              7: 'Julho',
+              8: 'Agosto',
+              9: 'Setembro',
+              10: 'Outubro',
+              11: 'Novembro',
+              12: 'Dezembro'}
+        
+        const tbody = document.querySelector("tbody");
+        let title = document.getElementById("tittle");
+        title.textContent = "Escala de " + month_dict[month];
+        // Loop through the schedule and create the rows
+        for (const [date, workers] of Object.entries(schedule)) {
+            for (const [time, name] of Object.entries(workers)) {
+                if (time === "manha" || time === "noite") { // Only display Sunday and Wednesday
+                    const row = document.createElement("tr");
+                    const dateCell = document.createElement("td");
+                    const timeCell = document.createElement("td");
+                    const nameCell = document.createElement("td");
+
+                    dateCell.textContent = date;
+                    timeCell.textContent = time;
+                    nameCell.textContent = name;
+
+                    // Add the corresponding worker class to color code the rows
+                    if (name === "Mateus") {
+                        nameCell.classList.add("mateus");
+                    } else if (name === "Felipe") {
+                        nameCell.classList.add("felipe");
+                    } else if (name === "Marcelo") {
+                        nameCell.classList.add("marcelo");
+                    }
+
+                    row.appendChild(dateCell);
+                    row.appendChild(timeCell);
+                    row.appendChild(nameCell);
+                    tbody.appendChild(row);
+                }
+            }
+        }
+        </script>
+</body>
+</html>
+
