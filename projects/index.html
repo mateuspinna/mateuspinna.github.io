@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+
+<head>
+  <title>IPETEQS_JS - Interpretador de PETEQS em Javascript</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"></meta>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div>
+    <header id="header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- Header-->
+      <div id="logo">
+        <i class="logo-logo material-icons">build</i>
+        <a class="navbar-brand" href="index.html">&nbsp:: IPETEQS_JS</a>
+      </div>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="http://www.leonnasc.com">Mais projetos </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/LeonNasc/ipeteqsJS"> Código fonte e documentação </a>
+        </li>
+      </ul>
+    </header>
+    <!-- Fim do header-->
+
+
+    <div id="titles" class="row">
+      <div class="col">
+        <button class="btn btn-success" onclick="PeteqsHelper.execute(document.querySelector('#codearea').value,document.querySelector('#visualizacao'))">
+            <i style="vertical-align:middle" class="material-icons">play_arrow</i>Executar
+          </button>
+
+          <button class="btn btn-success" onclick="abrirCodigoJavascript()">
+            <i style="vertical-align:middle" class="material-icons">play_arrow</i>Ver código traduzido
+          </button>
+      </div>
+    </div>
+
+    <main class="container-fluid">
+      <div class="row">
+        <div class="col-md-7 col-xs-12">          
+          <textarea id="codearea" name='input'></textarea>
+        </div>
+        <div class="col-md-5 col-xs-12">          
+          <div id="visualizacao">
+            RESULTADO : <span class="blink_me">&block;</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="utilCEDERJ.js"></script>
+  <script src="ipeteqs.js"></script>
+  <script src="beautifier.js"></script>
+</body>
