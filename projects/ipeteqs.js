@@ -270,6 +270,10 @@ const PeteqsCore = {
     pow: function(numero, potencia) {
         return Math.pow(numero, potencia);
     },
+    max: function(arg1, arg2, arg3) {
+        let args = [arg1, arg2, arg3];
+        return Math.max(...args);
+    }
 };
 
 const PeteqsHelper = {
@@ -302,6 +306,7 @@ const PeteqsHelper = {
      */
     exp_converter: function (linha) {
         linha = linha.replace(/pow\(([^,]+?),\s*([^,]+?)\)/g, 'PeteqsCore.pow($1, $2)');
+        linha = linha.replace(/max\(([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/g, 'PeteqsCore.max($1, $2, $3)');
         PeteqsHelper.operators.forEach(function (operator) {
         
             switch (operator) {
