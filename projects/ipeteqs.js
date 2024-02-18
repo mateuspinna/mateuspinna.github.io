@@ -312,13 +312,17 @@ const PeteqsHelper = {
             switch (operator) {
                 case '/':
                     if (linha.match(/(?!^).\/./)) {
-                        // Verifica se é uma divisão
-                        if (!linha.match(/(?!^)\d\.\d/g)) {
-                            // Se os números forem inteiros, truncamos o resultado
-                            if (linha.match(/\b(\d+)\b\s*\/\s*\b(\d+)\b/)) {
-                                linha = linha.replace(/\b(\d+)\b\s*\/\s*\b(\d+)\b/g, "Math.floor($1/$2)");
+                        //Caso não se especifique que deseja-se operar em números reais, trunca-se a parte decimal.
+                        //Operadores bitwise em JS convertem por padrão o número para um int de 32 bits.
+                        divisoes = linha.match(/(?!^)[^\w\<\-](\b.*\/.*\b)/g);
+                        divisoes.forEach(function(match){
+                            if(divisoes == linha){
+                                linha = linha.replace(match,"$&>>0");
+                                return;
                             }
-                        }
+                            console.log(match);
+                            linha = linha.replace(match,"($&>>0)");
+                        });
                     }
                     break;
                 case ' - ':
@@ -453,7 +457,7 @@ const PeteqsHelper = {
             }
         }
         else if (linha.match(PeteqsHelper.reserved_words[0])) {
-            return '//Início';
+            return '//Início\n{';
         }
         else if (linha.match(/^fim/gi) || linha.match(/^pr[óo]ximo/gi)) {
             return PeteqsCore.fim(linha);
