@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação do IPETEQS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        footer {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>IPETEQS</h1>
+        <p>Interpretador da pseudolinguagem PETEQS</p>
+    </header>
+
+    <section>
+        <h2>O que é IPETEQS em JavaScript?</h2>
+        <p>Visando a possibilidade de executar PETEQS em qualquer lugar, ipeteqs foi portado para Javascript. Assim como o interpretador original, ele traduz a linguagem PETEQS para uma linguagem real e a executa, sendo escrito em Javascript ambos o tradutor e o código traduzido.</p>
+        <p>Sendo importado em uma página, recebe um string de código PETEQS e retorna a execução deste código.</p>
+    </section>
+    <section>
+        <h2>A linguagem PETEQS</h2>
+        <p>PETEQS é uma pseudolinguagem utilizada no aprendizado de lógica de programação em algumas faculdades, especificamente na UFF.</p>
+<p>A linguagem PETEQS possui todas as operações básicas, incluindo:</p>
+<ul>
+    <li>Atribuição: `a <- 1`</li>
+    <li>Soma: `a <- 2 + 2`</li>
+    <li>Subtração: `a <- 2 - 1`</li>
+    <li>Multiplicação: `a <- a * 20`</li>
+    <li>Módulo: `a <- a mod 5`</li>
+</ul>
+<p>Além disso, ela possui divisão, onde um número dividido sempre terá seu resultado como um inteiro, a menos que seja explicitamente declarado com um ponto decimal.</p>
+<p>Exemplo de divisão:</p>
+<ul>
+    <li>`a <- 20 / 2` (a será 10)</li>
+    <li>`a <- 20 / 3` (a será 6)</li>
+    <li>`a <- 20.0 / 3` (a será 6.666...)</li>
+</ul>
+<p>PETEQS também inclui desvios condicionais, como `SE ... ENTÃO ... FIM SE`, e estruturas de repetição, como `PARA ... FAÇA ... FIM PARA` e `ENQUANTO ... FAÇA ... FIM ENQUANTO`.</p>
+<p>Além disso, possui procedimentos e funções para modularização do código.</p>
+<p>As funções de entrada e saída básicas em PETEQS são `leia`, `imprima` e `imprimaln`.</p>
+<p>PETEQS também suporta vetores, variáveis indexadas.</p>
+    </section>
+    <section>
+        <h2>Desvios Condicionais em PETEQS</h2>
+        <p>PETEQS possui desvios condicionais, que atuam nos operadores lógicos `>`, `>=`, `<`, `<=`, `<>` e `=`.</p>
+        <p>Exemplo de desvio condicional:</p>
+        <pre>
+            <code>
+                SE a > 0 ENTÃO
+                  //Código aqui
+                FIM SE
+    
+                SE b < 100 ENTÃO
+                  //Faça algo aqui
+                SENÃO
+                  //Faça outra coisa aqui
+                FIM SE  
+    
+                SE C = 2 ENTÃO
+                  imprimaln 'C é 2'
+                SENÃO SE C <> 3
+                  imprimaln 'C não é 3'
+                SENÃO
+                  imprima 'C é qualquer outro número'
+                FIM SE
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Estruturas de Repetição em PETEQS</h2>
+        <p>PETEQS inclui duas estruturas de repetição: os laços `PARA` e os laços `ENQUANTO`.</p>
+        <p>Exemplo de laço `PARA`:</p>
+        <pre>
+            <code>
+                //Contador de ano novo
+                PARA i <- 10 ATÉ 1 FAÇA
+                  imprima i
+                FIM PARA
+    
+                //De modo geral
+                PARA Início ATÉ Final FAÇA
+                  //Ação
+                FIM PARA
+            </code>
+        </pre>
+        <p>Exemplo de laço `ENQUANTO`:</p>
+        <pre>
+            <code>
+                saldo <- 100
+                ENQUANTO saldo > 0 FAÇA
+                  saldo <- saldo - 5
+                FIM ENQUANTO
+    
+                //De modo geral
+                ENQUANTO Condição FAÇA
+                  //Ação
+                FIM ENQUANTO
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Procedimentos e Funções em PETEQS</h2>
+        <p>PETEQS possui procedimentos e funções para modularização do código.</p>
+        <p>Exemplo de função em PETEQS:</p>
+        <pre>
+            <code>
+                FUNÇÃO É_PAR(entrada: num, saída: é_impar)
+                INÍCIO
+                   SE num mod 2 <> 0 ENTÃO 
+                     resultado <- Falso
+                   SENÃO
+                     resultado <- Verdadeiro
+                   FIM SE
+                FIM
+    
+                PROCEDIMENTO ImprimePares()
+                INÍCIO
+                  PARA i <- 0 ATÉ 100 FAÇA
+                     SE É_PAR(i) ENTÃO
+                       imprimaln i
+                     FIM SE
+                  FIM PARA
+                FIM
+    
+                ImprimePares()                  //Imprime todos os números pares
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Entrada e Saída em PETEQS</h2>
+        <p>PETEQS possui funções básicas de entrada e saída, incluindo `leia`, `imprima` e `imprimaln`.</p>
+        <p>Exemplo de entrada e saída em PETEQS:</p>
+        <pre>
+            <code>
+                // Em vez de fazer assim:
+                leia gato_1
+                leia gato_2
+                leia gato_3
+    
+                imprima gato_1
+                imprima gato_2
+                imprima gato_3
+    
+                // Com as funções de entrada PETEQS, com o uso de vetores podemos:
+                PARA i <- 1 ATÉ 3 FAÇA
+                  leia gato[i]
+                  imprima gato[i]
+                FIM PARA
+            </code>
+        </pre>
+    </section>
+    
+    <footer>
+        <p>CEDERJ</p>
+    </footer>
+    </body>
+    </html>
