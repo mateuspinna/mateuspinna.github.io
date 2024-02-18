@@ -43,17 +43,42 @@ function find(string, sub){
 }
 //-------------------------------------------------------------------------------/
 
-function abrirCodigoJavascript(){
-    let  codigo_peteqs = document.querySelector('#codearea').value;
+function abrirCodigoJavascript() {
+    let codigo_peteqs = document.querySelector('#codearea').value;
     var code = PeteqsHelper.execute(codigo_peteqs);
-    var janela=window.open('');
-   console.log(code); 
-    with(janela){
-        beauty = js_beautify(code, {
+    
+
+    var popupContainer = document.querySelector('.popup-code');
+
+    popupContainer.innerHTML = '<pre><b>Tradução do código para JS:</b>\n'
+     + js_beautify(code, {
         'indent_size': 1,
         'indent_char': '\t'
-        });
-        beauty = beauty.replace(/\<br\>/gi,"\\n")
-        document.write("<pre>"+beauty+"</pre>");
-    }   
+    }).replace(/<br>/gi, "\\n") + '</pre>';
+    
+    abrirPopup();
 }
+
+function abrirPopup() {
+    document.querySelector('.overlay').style.display = 'flex';
+}
+
+function fecharPopup() {
+    document.querySelector('.overlay').style.display = 'none';
+}
+//--------------------------------------------------------------------------------/
+
+const textarea = document.getElementById('codearea');
+
+textarea.addEventListener('keydown', function(event) {
+    if (event.key === 'Tab') {
+        event.preventDefault();
+        
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        const text = this.value;
+        this.value = text.substring(0, start) + '\t' + text.substring(end);
+        
+        this.selectionStart = this.selectionEnd = start + 1;
+    }
+});
