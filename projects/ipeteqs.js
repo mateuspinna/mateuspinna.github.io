@@ -57,18 +57,21 @@ const PeteqsCore = {
     leia: function (linha) {
 
         let code = ""
-
+        let variables;
         linha = linha.substring(4, linha.length); //Remove o leia
 
-        //Verifica a existência de um vetor e o inicializa caso não exista.
-        code = PeteqsHelper.handle_vectors(linha)+"\n";
+        variables = linha.split(',');
+        variables.map(function(variable) {
+            //Verifica a existência de um vetor e o inicializa caso não exista.
+            code += PeteqsHelper.handle_vectors(variable)+"\n";        
+            code += PeteqsHelper.get_input(PeteqsHelper.has_vector(variable),variable);
+            //Javascript faz typecasting pra string na função prompt. Aqui garantimos que os números sejam números        
+            code += `\nif(!isNaN(${variable})){
+                ${variable} = Number(${variable})
+            }`;
+        })
         
-        code += PeteqsHelper.get_input(PeteqsHelper.has_vector(linha),linha);
-
-        //Javascript faz typecasting pra string na função prompt. Aqui garantimos que os números sejam números        
-        return code + `\nif(!isNaN(${linha})){
-            ${linha} = Number(${linha})
-        }`;
+        return code
     },
     /**
      * Função de atribuição: Substitui as expressões PETEQS por expressões javascript,
@@ -289,7 +292,7 @@ const PeteqsHelper = {
     operators: [" + ", " - ", " * ", "/", ' mod ', " <> ", "=", " E ", " OU ", " NÃO ", 'VERDADEIRO', 'FALSO']
     ,
     //Palavras reservadas
-    reserved_words: [/^início/gi, /^fim/gi, /^pr[óo]ximo/gi, /^senão/gi, /^função/gi, /^programa/gi,]
+    reserved_words: [/^in[íi]cio/gi, /^fim/gi, /^pr[óo]ximo/gi, /^senão/gi, /^função/gi, /^programa/gi,]
     ,    
     //Determina se a linha analisada faz parte de um bloco contido em um programa
     in_programa: false
@@ -306,7 +309,8 @@ const PeteqsHelper = {
      */
     exp_converter: function (linha) {
         linha = linha.replace(/pow\(([^,]+?),\s*([^,]+?)\)/g, 'PeteqsCore.pow($1, $2)');
-        linha = linha.replace(/max\(([^,]+?),\s*([^,]+?),\s*([^,]+?)\)/g, 'PeteqsCore.max($1, $2, $3)');
+        linha = linha.replace(/max\(\s*([^,]+?)\s*,\s*([^,]+?)\s*,\s*([^)]+?)\s*\)/g, 'PeteqsCore.max($1, $2, $3)');
+       
         PeteqsHelper.operators.forEach(function (operator) {
         
             switch (operator) {
@@ -419,7 +423,7 @@ const PeteqsHelper = {
         return code;
     },
     get_input:function(flag,varname){
-        //Flag muda a apresentaç~ao do prompt
+        //Flag muda a apresentação do prompt
 
         if (flag) {
             return `${varname} = prompt('Insira o valor da variável do vetor');`;
